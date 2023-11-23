@@ -56,14 +56,24 @@ function CodeRunner()
   --     name = "Code",
   --     r = { "<cmd>luafile %<cr>", "Run" },
   --   }
-  if ft == "groovy" then
-    vim.api.nvim_buf_set_keymap(
-      bufnr,
-      "n",
-      "<leader>v",
-      ":w<cr>:TermExec cmd='!!'<cr>:TermExec cmd=''<cr>",
-      { noremap = true, desc = "Groovy Repeat Terminal Command (!!)" }
-    )
+  if ft == "groovy" or ft == "sql" then
+    if jit.os == "Windows" then
+      vim.api.nvim_buf_set_keymap(
+        bufnr,
+        "n",
+        "<leader>v",
+        ':w<cr>:TermExec cmd="r"<cr>',
+        { noremap = true, desc = "Groovy Repeat Terminal Command (r)" }
+      )
+    else
+      vim.api.nvim_buf_set_keymap(
+        bufnr,
+        "n",
+        "<leader>v",
+        ":w<cr>:TermExec cmd='!!'<cr>:TermExec cmd=''<cr>",
+        { noremap = true, desc = "Groovy Repeat Terminal Command (!!)" }
+      )
+    end
   elseif fname == ".tmux.conf" then
     vim.api.nvim_buf_set_keymap(
       bufnr,
