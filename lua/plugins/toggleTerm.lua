@@ -12,7 +12,7 @@ return {
     keys = {
       {
         "<leader>t",
-        "<cmd>ToggleTerm direction='vertical' size=80 <cr>",
+        '<cmd>ToggleTerm direction="vertical" size=80 <cr>',
         -- "<cmd>lua _clearTerm_toggle()<cr>",
         desc = "ToggleTerm",
       },
