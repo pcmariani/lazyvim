@@ -18,11 +18,12 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
 
-if vim.g.neovide then
-  -- vim.o.guifont = "Source Code Pro:h14"
-  vim.o.guifont = "Iosevka Nerd Font Mono:h14"
-  -- vim.opt.linespace = 0 -- Controls spacing between lines, may also be negative.
+-- gui
+vim.opt.guifont = "Iosevka Nerd Font Mono:h14, Iosevka NFM:h12"
+-- vim.opt.linespace = 0 -- Controls spacing between lines, may also be negative.
 
+if vim.g.neovide then
+  --
   -- ### function to change scale factor with keybindings
   vim.g.neovide_scale_factor = 1.0
   local change_scale_factor = function(delta)
