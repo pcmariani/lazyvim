@@ -10,6 +10,7 @@ vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 -- vim.opt.splitkeep = "cursor"
 -- vim.opt.number = true
 vim.opt.relativenumber = false
+vim.o.sessionoptions = "buffers,curdir,help,globals,folds,winsize,winpos,terminal,localoptions"
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])

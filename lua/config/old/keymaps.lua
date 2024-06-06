@@ -89,7 +89,8 @@ vim.keymap.set('n','<C-M-n>', [[empty(filter(getwininfo(), 'v:val.loclist')) ? "
 vim.keymap.set('n','<C-q>', [[:silent vimgrep //j %<CR>]], { noremap = true, silent = true })
 -- send // to quickfix globally
 vim.keymap.set('n','<leader><C-q>', [[:silent exe "grep "substitute(@/,'^\\V','','')<CR>]], { noremap = true, silent = true })
--- local search for word under cursor and send to quickfix
+
+-- local search for word under cursor - don't need, * does same thing
 vim.keymap.set('n','<leader>/', [[/\V<C-r>=expand("<cword>")<CR><CR>]], { noremap = true, silent = true })
 -- global search for word under cursor and send to quickfix
 vim.keymap.set('n','<leader><leader>/', [[/\V<C-r>=expand("<cword>")<CR><CR>:silent exe "grep "substitute(@/,'^\\V','','')<CR>]], { noremap = true, silent = true })
@@ -112,7 +113,7 @@ vim.keymap.set('v','<leader>;', [[:s///gc<Left><Left><Left><Left>]], { noremap =
 vim.keymap.set('n','<leader>h', [[/\V<C-r>=expand("<cword>")<CR><CR>:%s/\<<C-r>=expand("<cword>")<CR>\>/<C-r>=expand("<cword>")<CR>/gc<Left><Left><Left>]], { noremap = true })
 -- local search/replace visual selection
 vim.keymap.set('v','<leader>h', [["hy/\V<C-r>h<CR>:%s/<C-r>h//gc<Left><Left><Left>]], { noremap = true })
--- global search/replace word under cursor
+-- global search/replace visual selection
 vim.keymap.set('v','<leader><leader>h', [["hy/<C-r>h<CR>:silent exe "grep "shellescape(substitute(@/,'[()\]\[{}]','\\&','g'))<CR>:cdo s/<C-r>h//gc<Left><Left><Left>]], { noremap = true })
 
 --- Formatting ---
