@@ -1,127 +1,74 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
--- Add any additional autocmds here
-
--- from DevAsLife
--- Turn off paste mode when leaving insert
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
-  command = "set nopaste",
-})
-
--- Disable the concealing in some file formats
--- The default conceallevel is 3 in LazyVim
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "json", "jsonc", "markdown" },
-  callback = function()
-    vim.opt.conceallevel = 0
-  end,
+  group = vim.api.nvim_create_augroup("filetypes", { clear = true }),
+  desc = "Don't show linenunmbers",
+  pattern = { "yaml", "yml" },
+  command = "set nonumber | set norelativenumber | set signcolumn=no",
 })
 
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "cpp",
---   callback = function()
---     vim.api.nvim_buf_set_keymap(
---       0,
---       "n",
---       "<C-c>",
---       ":split<CR>:te g++ -std=c++14 -Wshadow -Wall -o %:t:r % -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG && ./%:t:r<CR>i",
---       opts
---     )
---   end,
--- })
-
--- local function code_keymap()
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = function()
-    vim.schedule(CodeRunner)
-  end,
+vim.api.nvim_create_augroup("CursorLine", { clear = true })
+vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter" }, {
+  group = "CursorLine",
+  desc = "Show cursorline on active window",
+  command = "setlocal cursorline",
 })
---
-function CodeRunner()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  local fname = vim.fn.expand("%:p:t")
-  -- local keymap_c = {}
+vim.api.nvim_create_autocmd("WinLeave", {
+  group = vim.api.nvim_create_augroup("CursorLine", { clear = false }),
+  desc = "Don't Show cursorline on non-active window",
+  command = "setlocal nocursorline",
+})
 
-  -- if ft == "python" then
-  --   keymap_c = {
-  --     name = "Code",
-  --     r = { "<cmd>update<CR><cmd>exec '!python3' shellescape(@%, 1)<cr>", "Run" },
-  --     m = { "<cmd>TermExec cmd='nodemon -e py %'<cr>", "Monitor" },
-  --   }
-  -- elseif ft == "lua" then
-  --   keymap_c = {
-  --     name = "Code",
-  --     r = { "<cmd>luafile %<cr>", "Run" },
-  --   }
-  -- if ft == "groovy" or ft == "sql" then
-  --   if jit.os == "Windows" then
-  --     vim.api.nvim_buf_set_keymap(
-  --       bufnr,
-  --       "n",
-  --       "<leader>v",
-  --       ':w<cr>:TermExec cmd="r"<cr>',
-  --       { noremap = true, desc = "Groovy Repeat Terminal Command (r)" }
-  --     )
-  --   else
-  --     vim.api.nvim_buf_set_keymap(
-  --       bufnr,
-  --       "n",
-  --       "<leader>v",
-  --       ":w<cr>:TermExec cmd='!!'<cr>:TermExec cmd=''<cr>",
-  --       { noremap = true, desc = "Groovy Repeat Terminal Command (!!)" }
-  --     )
-  --   end
-  if fname == ".tmux.conf" then
-    vim.api.nvim_buf_set_keymap(
-      bufnr,
-      "n",
-      "<leader>cs",
-      ":w<cr><cmd>!tmux source-file ~/.tmux.conf<cr>",
-      { noremap = true, desc = "Source .tmux.conf" }
-    )
-  end
-end
+vim.cmd([[
+" augroup Formatoptions
+"   au!
+"   au VimEnter * set fo-=c fo-=o
+" augroup END
 
---   elseif ft == "rust" then
---     keymap_c = {
---       name = "Code",
---       r = { "<cmd>Cargo run<cr>", "Run" },
---       D = { "<cmd>RustDebuggables<cr>", "Debuggables" },
---       h = { "<cmd>RustHoverActions<cr>", "Hover Actions" },
---       R = { "<cmd>RustRunnables<cr>", "Runnables" },
---     }
---   elseif ft == "go" then
---     keymap_c = {
---       name = "Code",
---       r = { "<cmd>GoRun<cr>", "Run" },
---     }
---   elseif ft == "typescript" or ft == "typescriptreact" or ft == "javascript" or ft == "javascriptreact" then
---     keymap_c = {
---       name = "Code",
---       o = { "<cmd>TSLspOrganize<cr>", "Organize" },
---       r = { "<cmd>TSLspRenameFile<cr>", "Rename File" },
---       i = { "<cmd>TSLspImportAll<cr>", "Import All" },
---       R = { "<cmd>lua require('config.test').javascript_runner()<cr>", "Choose Test Runner" },
---       s = { "<cmd>2TermExec cmd='yarn start'<cr>", "Yarn Start" },
---       t = { "<cmd>2TermExec cmd='yarn test'<cr>", "Yarn Test" },
---     }
---   end
---
---   if fname == "package.json" then
---     keymap_c.v = { "<cmd>lua require('package-info').show()<cr>", "Show Version" }
---     keymap_c.c = { "<cmd>lua require('package-info').change_version()<cr>", "Change Version" }
---     keymap_c.s = { "<cmd>2TermExec cmd='yarn start'<cr>", "Yarn Start" }
---     keymap_c.t = { "<cmd>2TermExec cmd='yarn test'<cr>", "Yarn Test" }
---   end
---
---   if next(keymap_c) ~= nil then
---     whichkey.register(
---       { c = keymap_c },
---       { mode = "n", silent = true, noremap = true, buffer = bufnr, prefix = "<leader>" }
---     )
---   end
--- end
--- end
+" augroup Filetypes
+"   au!
+"   au BufWinEnter * if &l:buftype ==# 'help' | nnoremap <buffer> q :q<CR> | endif
+"   " Make sure .aliases, .bash_aliases and similar files get syntax highlighting.
+"   au BufNewFile,BufRead *aliases* set ft=sh
+"   " Update a buffer's contents on focus if it changed outside of Vim.
+"   " au FocusGained,BufEnter * :checktime
+" augroup END
+
+" augroup terminal
+"   au!
+"   " au BufWinEnter,WinEnter term://* startinsert
+"   au BufWinEnter,WinEnter * if &l:buftype ==# 'terminal' | call SpecialWindowMaps() | set signcolumn=no | endif
+" augroup END
+
+" augroup qf
+"   au!
+"   au BufWinEnter * if &l:buftype ==# 'quickfix'
+"     \| nnoremap <buffer> dd :lua require('myFuncs').remove_qf_item()<CR>
+"     \| nnoremap <buffer> q :cclose<CR>
+"     \| nnoremap <buffer> <leader>bk :cclose<CR>
+"     \| nnoremap <buffer> <leader>bd :cclose<CR>
+"     \| call SpecialWindowMaps()
+"     \| endif
+"   au FileType qf call SetQFOptions()
+"   " quit Vim if the last window is a quickfix window
+"   " au qf BufEnter    <buffer> nested if get(g:, 'qf_auto_quit', 1) | if winnr('$') < 2 | q | endif | endif
+" augroup END
+
+" function SetQFOptions()
+"   " open quickfix full width on the bottom
+"   if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif
+"   set nobuflisted
+"   setlocal norelativenumber
+"   setlocal number
+"   set laststatus=0
+"   au WinClosed <buffer> set laststatus=2
+" endfunction
+
+" function SpecialWindowMaps()
+"   nnoremap <buffer> ` <nop>
+"   nnoremap <buffer> <leader>` <nop>
+"   nnoremap <buffer> <leader>bs <nop>
+"   nnoremap <buffer> <leader>bn <nop>
+"   nnoremap <buffer> <leader>bN <nop>
+"   nnoremap <buffer> <leader>bp <nop>
+"   endfunction
+
+]])

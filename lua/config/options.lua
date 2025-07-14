@@ -1,31 +1,13 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
+vim.o.relativenumber = false
+vim.o.showtabline = 1
 
--- vim.opt.shell = "fish"
-vim.opt.backspace = { "start", "eol", "indent" }
-vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
--- vim.opt.wildignore:append({ "*/node_modules/*" })
--- vim.opt.inccommand = "split"
--- vim.opt.splitkeep = "cursor"
--- vim.opt.number = true
-vim.opt.relativenumber = false
-vim.o.sessionoptions = "buffers,curdir,help,globals,folds,winsize,winpos,terminal,localoptions"
-
--- Undercurl
-vim.cmd([[let &t_Cs = "\e[4:3m"]])
-vim.cmd([[let &t_Ce = "\e[4:0m"]])
-
--- Add asterisks in block comments
-vim.opt.formatoptions:append({ "r" })
-
--- gui
-vim.opt.guifont = "Iosevka Nerd Font Mono:h14, Iosevka NFM:h12"
--- vim.opt.linespace = 0 -- Controls spacing between lines, may also be negative.
+vim.opt.guifont = "Iosevka Nerd Font:h16"
 
 if vim.g.neovide then
   --
-  -- ### function to change scale factor with keybindings
   vim.g.neovide_scale_factor = 1.0
   local change_scale_factor = function(delta)
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
@@ -49,11 +31,12 @@ if vim.g.neovide then
   -- end
   -- ### note that g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
   -- ### Setting g:neovide_transparency to a value between 0.0 and 1.0 will set the opacity of the window to that value.
-  vim.g.neovide_transparency = 0.0
-  vim.g.transparency = 1
+  -- vim.g.neovide_transparency = 0.0
+  vim.g.neovide_opacity = 0.0
+  -- vim.g.transparency = 1
   -- ### Setting g:neovide_background_color to a value that can be parsed by csscolorparser-rs will set the color of the whole window to that value.
   -- vim.g.neovide_background_color = "#000000" .. alpha()
-  vim.g.neovide_background_color = "#000000"
+  vim.g.neovide_background_color = "#13141a"
 
   -- ### blur
   -- vim.g.neovide_floating_blur_amount_x = 2.0
@@ -68,26 +51,15 @@ if vim.g.neovide then
   -- vim.g.neovide_fullscreen = true
   vim.g.neovide_remember_window_size = true
   -- ### Interprets Alt + whatever actually as <M-whatever>, instead of sending the actual special character to Neovim.
-  -- vim.g.neovide_input_macos_alt_is_meta = false
+  vim.g.neovide_input_macos_alt_is_meta = false
   -- ### Setting g:neovide_cursor_animation_length determines the time it takes for the cursor to complete it's animation in seconds. Set to 0 to disable.
 
   -- ### cursor
   -- vim.g.neovide_cursor_animation_length = 0.13
-  vim.g.neovide_cursor_trail_size = 0.2
+  vim.g.neovide_cursor_trail_size = 0.1
   -- vim.g.neovide_cursor_antialiasing = true
   -- vim.g.neovide_cursor_animate_in_insert_mode = true
   -- vim.g.neovide_cursor_animate_command_line = true
   -- ### Specify cursor outline width in ems. You probably want this to be a positive value less than 0.5. If the value is <=0 then the cursor will be invisible. This setting takes effect when the editor window is unfocused, at which time a block cursor will be rendered as an outline instead of as a full rectangle.
   -- vim.g.neovide_cursor_unfocused_outline_width = 0.125
-end
-
-if jit.os == "Windows" then
-  -- powershell
-  vim.opt.shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
-  vim.opt.shellcmdflag =
-    "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-  vim.opt.shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait"
-  vim.opt.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-  vim.opt.shellquote = ""
-  vim.opt.shellxquote = ""
 end

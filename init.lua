@@ -1,5 +1,6 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
+
+require("myStuff.myAutocmds")
 require("config.lazy")
-require("send-command")
-require("highlights")
-require("snippets")
+require("myStuff.myFuncs")
+require("myStuff.myCommands")

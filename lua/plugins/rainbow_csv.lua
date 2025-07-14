@@ -16,28 +16,12 @@ return {
     "RainbowMultiDelim",
   },
   keys = {
-    { "=ra", "<cmd>RainbowAlign<cr>", desc = "RainbowCsv Align" },
-    { "=rs", "<cmd>RainbowShrink<cr>", desc = "RainbowCsv Shrink" },
-    { "=rd", "<cmd>RainbowDelim<cr>", desc = "RainbowCsv Delim" },
-    { "=rn", "<cmd>RainbowNoDelim<cr>", desc = "RainbowCsv NoDelim" },
+    {
+      "=r",
+      function()
+        require("myStuff.myFuncs").ToggleRainbow()
+      end,
+      { desc = "Toggle Rainbow CSV Alignment" },
+    },
   },
 }
--- return {
---   "cameron-wags/rainbow_csv.nvim",
---   config = true,
---   ft = {
---     "csv",
---     "tsv",
---     "csv_semicolon",
---     "csv_whitespace",
---     "csv_pipe",
---     "rfc_csv",
---     "rfc_semicolon",
---   },
---   cmd = {
---     "RainbowDelim",
---     "RainbowDelimSimple",
---     "RainbowDelimQuoted",
---     "RainbowMultiDelim",
---   },
--- }
