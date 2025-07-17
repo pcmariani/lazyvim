@@ -73,6 +73,31 @@ function M.load_term_command(cwd)
   end
   return nil
 end
+
+function M.get_last_zsh_command()
+  local historyfile = os.getenv("HOME") .. "/.config/zsh/.zhistory"
+
+  local f = io.open(historyfile, "r")
+  if not f then
+    print("Unable to open .zhistory file")
+    return nil
+  end
+
+  local lastline = nil
+  for line in f:lines() do
+    if line ~= "" then
+      lastline = line
+    end
+  end
+  f:close()
+
+  if lastline then
+    local cmd = lastline:match(";%s*(.+)$")
+    return cmd
+  end
+
+  return nil
+end
 -- }}} END SEND TO TERM
 
 function M.search_to_qf(bang)
@@ -97,6 +122,42 @@ function M.ToggleRainbow()
   else
     vim.cmd("RainbowShrink")
     vim.b.rainbow_aligned = 0
+  end
+end
+
+function M.toggleLeftColumns(bang)
+  if not bang then
+    if vim.o.signcolumn == "yes" then
+      vim.o.signcolumn = "no"
+      vim.o.numberwidth = 1
+      vim.o.number = false
+    else
+      vim.o.signcolumn = "yes"
+      vim.o.numberwidth = 4
+      vim.o.number = true
+    end
+  else
+    local toggle_off = vim.wo.signcolumn == "yes"
+
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      local buftype = vim.api.nvim_get_option_value("buftype", { scope = "local", buf = buf })
+      local is_floating = vim.api.nvim_win_get_config(win).relative ~= ""
+
+      if vim.api.nvim_win_is_valid(win) and not is_floating and buftype == "" then
+        vim.api.nvim_win_call(win, function()
+          if toggle_off then
+            vim.wo.signcolumn = "no"
+            vim.wo.numberwidth = 1
+            vim.wo.number = false
+          else
+            vim.wo.signcolumn = "yes"
+            vim.wo.numberwidth = 4
+            vim.wo.number = true
+          end
+        end)
+      end
+    end
   end
 end
 

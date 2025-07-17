@@ -11,18 +11,28 @@ vim.keymap.set("n", "<leader>otr", function()
 end, { silent = true, desc = "Terminal Right" })
 vim.keymap.set("n", "<leader>x", ":SendToTerm<cr>", { desc = "Send command to term" })
 vim.keymap.set("n", "<leader>X", ":SendToTerm ", { desc = "New command to term" })
+vim.keymap.set("n", "<leader>c", ":SaveTermCommand<cr>", { desc = "Save term command" })
 
 -- misc
 vim.keymap.set("n", "<C-i>", "<C-i>", { silent = true })
 vim.keymap.set({ "n", "x" }, "<TAB>", "%", { desc = "Match character" })
 vim.keymap.set("n", "<Leader>`", "<C-^>", { desc = "Buffer Previous" })
 -- vim.keymap.set("n", "'", "`", { desc = "Marks" })
-vim.keymap.set(
-  "n",
-  "<leader>uW",
-  [[&signcolumn == 'yes' ? 'mR:windo set signcolumn=no numberwidth=1<CR>`R:delmark R<cr>' : 'mR:windo set signcolumn=yes numberwidth=4<CR>`R:delmark R<cr>']],
-  { expr = true, silent = true, desc = "Signcolumn" }
-)
+-- vim.keymap.set(
+--   "n",
+--   "<leader>ul",
+--   -- [[&signcolumn == 'yes' ? 'mR:windo set signcolumn=no numberwidth=1 nonumber norelativenumber<CR>`R:delmark R<cr>' : 'mR:windo set signcolumn=yes numberwidth=4 number<CR>`R:delmark R<cr>']],
+--   [[&signcolumn == 'yes' ? ':set signcolumn=no numberwidth=1 nonumber norelativenumber<cr>' : ':set signcolumn=yes numberwidth=4 number<cr>']],
+--   { expr = true, silent = true, desc = "Signcolumn" }
+-- )
+vim.keymap.set("n", "<leader>tl", function()
+  require("myStuff.myFuncs").toggleLeftColumns()
+end, { expr = true, silent = true, desc = "Signcolumn" })
+
+vim.keymap.set("n", "<leader>tL", function()
+  require("myStuff.myFuncs").toggleLeftColumns(1)
+end, { expr = true, silent = true, desc = "Signcolumn" })
+vim.keymap.set("n", "<leader>m", ":w<cr>:make<cr>", { desc = "Make" })
 
 -- buffer
 vim.keymap.set("n", "`", ":bnext<cr>", { desc = "Buffer Next" })
@@ -31,6 +41,7 @@ vim.keymap.set("n", "<Leader>by", "mtgg0vG$y`t:delmarks t<cr>", { desc = "Yank B
 vim.keymap.set("n", "<leader>bk", function()
   Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
+vim.keymap.set("n", "<Leader>bl", ":FzfLua filetypes<cr>", { desc = "Buffer Filetype" })
 
 -- splits
 vim.keymap.set("n", "-=", "<C-w>=", { desc = "Make splits equal size" })
@@ -115,18 +126,30 @@ vim.keymap.set("v", "<leader>R", [[:s///gc<Left><Left><Left><Left>]], { noremap 
 vim.keymap.set(
   "n",
   "<leader>r",
-  -- [[/\V<C-r>=expand("<cword>")<CR><CR>:%s/\<<C-r>=expand("<cword>")<CR>\>/<C-r>=expand("<cword>")<CR>/gc<Left><Left><Left>]],
-  [[*'':%s/\<<C-r>=expand("<cword>")<CR>\>/<C-r>=expand("<cword>")<CR>/gc<Left><Left><Left>]],
+  [[mr/\V<C-r>=expand("<cword>")<cr><cr>`r:delmark r<cr>:%s/\<<C-r>=expand("<cword>")<CR>\>/<C-r>=expand("<cword>")<CR>/gc<Left><Left><Left>]],
+  -- [[*'':%s/\<<C-r>=expand("<cword>")<CR>\>/<C-r>=expand("<cword>")<CR>/gc<Left><Left><Left>]],
   { noremap = true }
 )
 -- local search/replace visual selection
 vim.keymap.set(
   "v",
   "<leader>r",
-  -- [["hy/\V<C-r>h<CR>:%s/<C-r>h/<C-r>h/gc<Left><Left><Left>]],
-  [["hy/\V<C-r>h<CR>:%s/<C-r>h/<C-r>h/gc<Left><Left><Left>]],
+  [[mr"hy/\V<C-r>h<cr>`r:delmark r<cr>:%s/<C-r>h/<C-r>h/gc<Left><Left><Left>]],
   { noremap = true, desc = "Replace Visual Selection" }
 )
+
+--formatting
+--xml
+vim.keymap.set({ "n", "v" }, "=x", function()
+  vim.bo.filetype = "xml"
+  LazyVim.format({ force = true })
+end, { desc = "Format Xml" })
+
+--xml
+vim.keymap.set({ "n", "v" }, "=j", function()
+  vim.bo.filetype = "json"
+  LazyVim.format({ force = true })
+end, { desc = "Format Json" })
 
 -- -- Stay in indent mode
 -- vim.keymap.set("n", "<", "<<", { silent = true })

@@ -1,18 +1,57 @@
+vim.api.nvim_create_augroup("FileTypes", { clear = true })
+vim.api.nvim_create_augroup("CursorLine", { clear = true })
+vim.api.nvim_create_augroup("Makeprgs", { clear = true })
+
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("filetypes", { clear = true }),
+  group = "FileTypes",
   desc = "Don't show linenunmbers",
   pattern = { "yaml", "yml" },
   command = "set nonumber | set norelativenumber | set signcolumn=no",
 })
 
-vim.api.nvim_create_augroup("CursorLine", { clear = true })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter", "BufWinEnter" }, {
+  group = "Makeprgs",
+  callback = function(args)
+    local path = vim.fn.fnamemodify(args.file, ":p")
+    local buf = args.buf
+    local makeprg
+
+    -- Map of full/partial paths to makeprg
+    local path_map = {
+      [vim.fn.expand("~/.tmux.conf")] = "tmux source-file ~/.tmux.conf",
+    }
+
+    -- Try path match first
+    for p, cmd in pairs(path_map) do
+      if path == vim.fn.fnamemodify(p, ":p") then
+        makeprg = cmd
+        break
+      end
+    end
+
+    -- If no path match, fallback to filetype
+    if not makeprg then
+      local ft_map = {
+        c = "gcc % -o %<",
+        lua = "luacheck %",
+        python = "python3 %",
+      }
+      makeprg = ft_map[vim.bo[buf].filetype]
+    end
+
+    if makeprg then
+      vim.bo[buf].makeprg = makeprg
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter" }, {
   group = "CursorLine",
   desc = "Show cursorline on active window",
   command = "setlocal cursorline",
 })
 vim.api.nvim_create_autocmd("WinLeave", {
-  group = vim.api.nvim_create_augroup("CursorLine", { clear = false }),
+  group = "CursorLine",
   desc = "Don't Show cursorline on non-active window",
   command = "setlocal nocursorline",
 })

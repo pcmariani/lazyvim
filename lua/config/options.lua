@@ -25,6 +25,15 @@ if vim.g.neovide then
   -- vim.g.neovide_padding_right = 0
   -- vim.g.neovide_padding_left = 0
 
+  -- Helper function for transparency formatting
+  local alpha = function()
+    return string.format("%x", math.floor(255 * (vim.g.transparency or 0.8)))
+  end
+  -- g:neovide_opacity should be 0 if you want to unify transparency of content and title bar.
+  vim.g.neovide_opacity = 0.0
+  vim.g.transparency = 0.8
+  vim.g.neovide_background_color = "#0f1117" .. alpha()
+
   -- ### transparency
   -- local alpha = function()
   --   return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
@@ -32,11 +41,11 @@ if vim.g.neovide then
   -- ### note that g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
   -- ### Setting g:neovide_transparency to a value between 0.0 and 1.0 will set the opacity of the window to that value.
   -- vim.g.neovide_transparency = 0.0
-  vim.g.neovide_opacity = 0.0
+  -- vim.g.neovide_opacity = 0.0
   -- vim.g.transparency = 1
   -- ### Setting g:neovide_background_color to a value that can be parsed by csscolorparser-rs will set the color of the whole window to that value.
   -- vim.g.neovide_background_color = "#000000" .. alpha()
-  vim.g.neovide_background_color = "#13141a"
+  -- vim.g.neovide_background_color = "#13141a"
 
   -- ### blur
   -- vim.g.neovide_floating_blur_amount_x = 2.0
