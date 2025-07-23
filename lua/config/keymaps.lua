@@ -9,30 +9,36 @@ end, { silent = true, desc = "Terminal Left" })
 vim.keymap.set("n", "<leader>otr", function()
   Snacks.terminal(nil, { win = { position = "right" }, cwd = LazyVim.root() })
 end, { silent = true, desc = "Terminal Right" })
-vim.keymap.set("n", "<leader>x", ":SendToTerm<cr>", { desc = "Send command to term" })
-vim.keymap.set("n", "<leader>X", ":SendToTerm ", { desc = "New command to term" })
-vim.keymap.set("n", "<leader>c", ":SaveTermCommand<cr>", { desc = "Save term command" })
+
+-- simple-term-exec
+vim.keymap.set({ "n", "i", "t" }, "<c-'>", function()
+  require("myStuff.simple-term-exec").save_last_zsh_command()
+end, { desc = "Save Last Terminal Command" })
+
+vim.keymap.set({ "n", "i", "t" }, "<c-cr>", function()
+  require("myStuff.simple-term-exec").send_command()
+end, { desc = "Send Terminal Command" })
 
 -- misc
+vim.keymap.set("n", "<leader>tt", ":!tmux set status off", { silent = true, desc = "Toggle Tmux Statusline" })
+vim.keymap.set(
+  "n",
+  "<leader>ts",
+  [[&laststatus == 0 ? ':set laststatus=3<cr>' : ':set laststatus=0<cr>']],
+  { expr = true, silent = true, desc = "Toggle Statusline" }
+)
 vim.keymap.set("n", "<C-i>", "<C-i>", { silent = true })
 vim.keymap.set({ "n", "x" }, "<TAB>", "%", { desc = "Match character" })
 vim.keymap.set("n", "<Leader>`", "<C-^>", { desc = "Buffer Previous" })
 -- vim.keymap.set("n", "'", "`", { desc = "Marks" })
--- vim.keymap.set(
---   "n",
---   "<leader>ul",
---   -- [[&signcolumn == 'yes' ? 'mR:windo set signcolumn=no numberwidth=1 nonumber norelativenumber<CR>`R:delmark R<cr>' : 'mR:windo set signcolumn=yes numberwidth=4 number<CR>`R:delmark R<cr>']],
---   [[&signcolumn == 'yes' ? ':set signcolumn=no numberwidth=1 nonumber norelativenumber<cr>' : ':set signcolumn=yes numberwidth=4 number<cr>']],
---   { expr = true, silent = true, desc = "Signcolumn" }
--- )
 vim.keymap.set("n", "<leader>tl", function()
   require("myStuff.myFuncs").toggleLeftColumns()
-end, { expr = true, silent = true, desc = "Signcolumn" })
-
+end, { expr = true, silent = true, desc = "Toggle Line Numbers (buffer)" })
 vim.keymap.set("n", "<leader>tL", function()
   require("myStuff.myFuncs").toggleLeftColumns(1)
-end, { expr = true, silent = true, desc = "Signcolumn" })
-vim.keymap.set("n", "<leader>m", ":w<cr>:make<cr>", { desc = "Make" })
+end, { expr = true, silent = true, desc = "Toggle Line Numbers (all)" })
+-- vim.keymap.set("n", "<leader>m", ":w<cr>:make<cr>", { desc = "Make (custome makeprg" })
+vim.keymap.set("n", "<leader>M", ":w<cr>:set makeprg=make<cr>:make<cr>", { desc = "Make" })
 
 -- buffer
 vim.keymap.set("n", "`", ":bnext<cr>", { desc = "Buffer Next" })
@@ -116,19 +122,11 @@ vim.keymap.set("n", "<leader>R", [[:%s///gc<Left><Left><Left><Left>]], { noremap
 -- start local substitution within visual selection
 vim.keymap.set("v", "<leader>R", [[:s///gc<Left><Left><Left><Left>]], { noremap = true, desc = "Replace in selection" })
 -- local search/replace word under cursor
--- vim.keymap.set(
---   "n",
---   "<leader>r",
---   [[viw"hy/\V<C-r>h<CR>:%s/<C-r>h/<C-r>h/gc<Left><Left><Left>]],
---   { noremap = true, desc = "Replace Word Under Cursor" }
--- )
-
 vim.keymap.set(
   "n",
   "<leader>r",
   [[mr/\V<C-r>=expand("<cword>")<cr><cr>`r:delmark r<cr>:%s/\<<C-r>=expand("<cword>")<CR>\>/<C-r>=expand("<cword>")<CR>/gc<Left><Left><Left>]],
-  -- [[*'':%s/\<<C-r>=expand("<cword>")<CR>\>/<C-r>=expand("<cword>")<CR>/gc<Left><Left><Left>]],
-  { noremap = true }
+  { noremap = true, desc = "Replace Word Under Cursor" }
 )
 -- local search/replace visual selection
 vim.keymap.set(

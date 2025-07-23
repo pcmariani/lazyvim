@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "set nonumber | set norelativenumber | set signcolumn=no",
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter", "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "BufRead", "BufNewFile", "BufEnter", "BufWinEnter" }, {
   group = "Makeprgs",
   callback = function(args)
     local path = vim.fn.fnamemodify(args.file, ":p")
@@ -33,14 +33,19 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter", "BufWinEnter"
     if not makeprg then
       local ft_map = {
         c = "gcc % -o %<",
-        lua = "luacheck %",
-        python = "python3 %",
+        -- lua = "luacheck %",
+        -- python = "python3 %",
       }
       makeprg = ft_map[vim.bo[buf].filetype]
     end
 
     if makeprg then
       vim.bo[buf].makeprg = makeprg
+      vim.keymap.set("n", "<leader>m", ":w<cr>:make<cr>", {
+        buffer = buf,
+        desc = "Make: " .. makeprg,
+        silent = true,
+      })
     end
   end,
 })

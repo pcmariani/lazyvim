@@ -15,12 +15,16 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#555540" })
     vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#664444" })
     -- transparent background
-    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none", fg = "#c0c0c0" })
     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+    vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
+    vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = "none" })
     vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
+    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#8cc85f", bg = "#10130f" })
     vim.api.nvim_set_hl(0, "CursorLine", { bg = "#10130f" })
-    vim.api.nvim_set_hl(0, "WinSeparator", { link = "MoonFlyGrey27" })
+    vim.api.nvim_set_hl(0, "WinSeparator", { link = "MoonFlyGrey23" })
+    -- vim.api.nvim_set_hl(0, "WinSeparator", { link = "MoonFlyGrey27" })
   end,
   group = custom_highlight,
 })
