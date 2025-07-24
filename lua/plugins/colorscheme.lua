@@ -22,7 +22,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = "none" })
     vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
     vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#8cc85f", bg = "#10130f" })
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#10130f" })
+    -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#10130f" })
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#000910" })
     vim.api.nvim_set_hl(0, "WinSeparator", { link = "MoonFlyGrey23" })
     -- vim.api.nvim_set_hl(0, "WinSeparator", { link = "MoonFlyGrey27" })
   end,

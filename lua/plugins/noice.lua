@@ -1,11 +1,23 @@
 return {
   "folke/noice.nvim",
   opts = {
+    routes = {
+      { filter = { find = "more" }, view = "mini" },
+      { filter = { find = "fewer" }, view = "mini" },
+      { filter = { find = "yanked" }, view = "mini" },
+      -- { filter = { find = "E162" }, view = "mini" },
+      -- { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
+      -- { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
+      -- { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
+      -- { filter = { event = "emsg", find = "E23" }, skip = true },
+      -- { filter = { event = "emsg", find = "E20" }, skip = true },
+      -- { filter = { find = "No signature help" }, skip = true },
+      -- { filter = { find = "E37" }, skip = true },
+    },
     presets = {
       bottom_search = false,
       command_palette = false, -- position the cmdline and popupmenu together
     },
-
     views = {
       cmdline_popup = {
         border = {
@@ -17,24 +29,9 @@ return {
         },
         position = {
           row = "80%",
-          -- row = "32",
-          -- col = "50%",
         },
         size = {
           width = 80,
-          -- width = function()
-          --   if vim.o.columns < 120 then
-          --     return 90
-          --   elseif vim.o.columns < 160 then
-          --     return 100
-          --   elseif vim.o.columns < 200 then
-          --     return 120
-          --   elseif vim.o.columns < 250 then
-          --     return 150
-          --   else
-          --     return 200
-          --   end
-          -- end,
           height = "auto",
         },
         -- win_options = {
