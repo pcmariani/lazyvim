@@ -1,20 +1,13 @@
+vim.o.showtabline = 0
+
 -- easy to command mode
 vim.keymap.set({ "n", "x" }, ";", ":", { desc = "Enter Command" })
 vim.keymap.set({ "n", "x" }, ":", ";", { desc = "Repeat Search" })
-
--- Terminal
-vim.keymap.set("n", "<leader>otl", function()
-  Snacks.terminal(nil, { win = { position = "left" }, cwd = LazyVim.root() })
-end, { silent = true, desc = "Terminal Left" })
-vim.keymap.set("n", "<leader>otr", function()
-  Snacks.terminal(nil, { win = { position = "right" }, cwd = LazyVim.root() })
-end, { silent = true, desc = "Terminal Right" })
 
 -- simple-term-exec
 vim.keymap.set({ "n", "i", "t" }, "<c-'>", function()
   require("myStuff.simple-term-exec").save_last_zsh_command()
 end, { desc = "Save Last Terminal Command" })
-
 vim.keymap.set({ "n", "i", "t" }, "<c-cr>", function()
   require("myStuff.simple-term-exec").send_command()
 end, { desc = "Send Terminal Command" })
@@ -43,7 +36,12 @@ vim.keymap.set("n", "<leader>M", ":w<cr>:set makeprg=make<cr>:make<cr>", { desc 
 -- buffer
 vim.keymap.set("n", "`", ":bnext<cr>", { desc = "Buffer Next" })
 vim.keymap.set("n", "<Leader>bs", ":w<cr>", { desc = "Save Buffer" })
-vim.keymap.set("n", "<Leader>by", "mtgg0vG$y`t:delmarks t<cr>", { desc = "Yank Buffer" })
+vim.keymap.set("n", "<Leader>by", function()
+  vim.cmd("normal! mz")
+  vim.cmd("normal! ggVGy")
+  vim.cmd("normal! `z")
+  vim.cmd("delmarks z")
+end, { desc = "Yank Buffer" })
 vim.keymap.set("n", "<leader>bk", function()
   Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
@@ -59,8 +57,8 @@ vim.keymap.set("n", "-s", "<C-w>s", { desc = "Split window horizontally" })
 vim.keymap.set("n", "-x", "<cmd>close<CR>", { desc = "Close current split" })
 
 -- Select all
-vim.keymap.set("n", "<C-a>", "gg0vG$", { silent = true, desc = "Select All" })
-vim.keymap.set("i", "<C-a>", "<Esc>gg0vG$", { silent = true, desc = "Select All" })
+vim.keymap.set("n", "<C-a>", "gg0VG", { silent = true, desc = "Select All" })
+vim.keymap.set("i", "<C-a>", "<Esc>ggVG", { silent = true, desc = "Select All" })
 
 -- set indent
 vim.keymap.set("n", "<leader>c2", ":set tabstop=2 shiftwidth=2<CR>", { silent = true, desc = "Tabs: 2 spaces" })

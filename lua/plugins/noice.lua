@@ -5,6 +5,7 @@ return {
       { filter = { find = "more" }, view = "mini" },
       { filter = { find = "fewer" }, view = "mini" },
       { filter = { find = "yanked" }, view = "mini" },
+      { filter = { find = "indented" }, view = "mini" },
       -- { filter = { find = "E162" }, view = "mini" },
       -- { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
       -- { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
