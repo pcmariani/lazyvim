@@ -22,10 +22,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = "none" })
     vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
     vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#8cc85f", bg = "#10130f" })
-    -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#10130f" })
     vim.api.nvim_set_hl(0, "CursorLine", { bg = "#000910" })
     vim.api.nvim_set_hl(0, "WinSeparator", { link = "MoonFlyGrey23" })
-    -- vim.api.nvim_set_hl(0, "WinSeparator", { link = "MoonFlyGrey27" })
+    vim.api.nvim_set_hl(0, "TabLineSel", { fg = "#74b2ff", bg = "#1a1a1a", italic = true })
+    vim.api.nvim_set_hl(0, "TabLine", { fg = "#606060", bg = "none" })
+    vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", fg = "#2c2c2c" })
   end,
   group = custom_highlight,
 })

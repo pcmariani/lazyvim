@@ -41,7 +41,7 @@ local function terminal_send(text)
   if first_terminal_chan then
     vim.api.nvim_chan_send(first_terminal_chan, text)
   else
-    Snacks.terminal(nil, { win = { position = "right" }, cwd = LazyVim.root() })
+    Snacks.terminal(nil, { win = { position = "right" } })
     first_terminal_chan = get_first_terminal()
     if first_terminal_chan then
       vim.api.nvim_chan_send(first_terminal_chan, text)

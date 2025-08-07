@@ -61,4 +61,18 @@ function M.toggleLeftColumns(bang)
   end
 end
 
+function M.toggle_status_bars()
+  -- local status = vim.fn.system("tmux show -v status"):gsub("%s+", "")
+  -- local new_status = (status == "on") and "off" or "on"
+  -- vim.fn.system("tmux set status " .. new_status)
+
+  if vim.o.laststatus == 0 then
+    vim.o.laststatus = 3
+    vim.fn.system("tmux set status on")
+  else
+    vim.o.laststatus = 0
+    vim.fn.system("tmux set status off")
+  end
+end
+
 return M

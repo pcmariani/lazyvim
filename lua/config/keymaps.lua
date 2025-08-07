@@ -1,5 +1,3 @@
-vim.o.showtabline = 0
-
 -- easy to command mode
 vim.keymap.set({ "n", "x" }, ";", ":", { desc = "Enter Command" })
 vim.keymap.set({ "n", "x" }, ":", ";", { desc = "Repeat Search" })
@@ -13,25 +11,28 @@ vim.keymap.set({ "n", "i", "t" }, "<c-cr>", function()
 end, { desc = "Send Terminal Command" })
 
 -- misc
-vim.keymap.set("n", "<leader>tt", ":!tmux set status off", { silent = true, desc = "Toggle Tmux Statusline" })
-vim.keymap.set(
-  "n",
-  "<leader>ts",
-  [[&laststatus == 0 ? ':set laststatus=3<cr>' : ':set laststatus=0<cr>']],
-  { expr = true, silent = true, desc = "Toggle Statusline" }
-)
-vim.keymap.set("n", "<C-i>", "<C-i>", { silent = true })
+vim.keymap.set("n", "<leader>ts", function()
+  require("myStuff.myFuncs").toggle_status_bars()
+end, { silent = true, desc = "Toggle Statuslines" })
+-- vim.keymap.set(
+--   "n",
+--   "<leader>ts",
+--   [[&laststatus == 0 ? ':set laststatus=3<cr>' : ':set laststatus=0<cr>']],
+--   { expr = true, silent = true, desc = "Toggle Statusline" }
+-- )
 vim.keymap.set({ "n", "x" }, "<TAB>", "%", { desc = "Match character" })
 vim.keymap.set("n", "<Leader>`", "<C-^>", { desc = "Buffer Previous" })
 -- vim.keymap.set("n", "'", "`", { desc = "Marks" })
 vim.keymap.set("n", "<leader>tl", function()
   require("myStuff.myFuncs").toggleLeftColumns()
-end, { expr = true, silent = true, desc = "Toggle Line Numbers (buffer)" })
+end, { silent = true, desc = "Toggle Line Numbers (buffer)" })
 vim.keymap.set("n", "<leader>tL", function()
   require("myStuff.myFuncs").toggleLeftColumns(1)
-end, { expr = true, silent = true, desc = "Toggle Line Numbers (all)" })
+end, { silent = true, desc = "Toggle Line Numbers (all)" })
 -- vim.keymap.set("n", "<leader>m", ":w<cr>:make<cr>", { desc = "Make (custome makeprg" })
 vim.keymap.set("n", "<leader>M", ":w<cr>:set makeprg=make<cr>:make<cr>", { desc = "Make" })
+vim.keymap.set("n", "<leader><C-o>", "<C-i>", { silent = true, desc = "Jump Forward" })
+vim.keymap.set("n", "<C-i>", "<C-i>", { silent = true })
 
 -- buffer
 vim.keymap.set("n", "`", ":bnext<cr>", { desc = "Buffer Next" })
@@ -57,7 +58,9 @@ vim.keymap.set("n", "-s", "<C-w>s", { desc = "Split window horizontally" })
 vim.keymap.set("n", "-x", "<cmd>close<CR>", { desc = "Close current split" })
 
 -- Select all
-vim.keymap.set("n", "<C-a>", "gg0VG", { silent = true, desc = "Select All" })
+vim.keymap.set("n", "<C-a>", function()
+  vim.cmd("normal! ggVG")
+end, { silent = true, desc = "Select All" })
 vim.keymap.set("i", "<C-a>", "<Esc>ggVG", { silent = true, desc = "Select All" })
 
 -- set indent
@@ -136,13 +139,13 @@ vim.keymap.set(
 
 --formatting
 --xml
-vim.keymap.set({ "n", "v" }, "=x", function()
+vim.keymap.set("n", "=x", function()
   vim.bo.filetype = "xml"
   LazyVim.format({ force = true })
 end, { desc = "Format Xml" })
 
 --xml
-vim.keymap.set({ "n", "v" }, "=j", function()
+vim.keymap.set("n", "=j", function()
   vim.bo.filetype = "json"
   LazyVim.format({ force = true })
 end, { desc = "Format Json" })
