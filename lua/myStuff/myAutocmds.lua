@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 vim.api.nvim_create_autocmd({ "FileType" }, {
   group = "FileTypes",
   desc = "Set tabs to 4 spaces",
-  pattern = { "c", "cpp" },
+  pattern = { "c", "cpp", "groovy" },
   callback = function()
     vim.bo.tabstop = 4
     vim.bo.shiftwidth = 4
@@ -92,7 +92,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter", "BufWinEnter"
     -- If no path match, fallback to filetype
     if not makeprg then
       local ft_map = {
-        c = "gcc % -o %<",
+        c = "gcc -g % -o %<",
         -- lua = "luacheck %",
         -- python = "python3 %",
       }

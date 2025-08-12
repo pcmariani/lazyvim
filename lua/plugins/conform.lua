@@ -9,6 +9,7 @@ return {
       clang_format = {
         prepend_args = {
           "-style={BasedOnStyle: llvm, IndentWidth: 4, AllowShortEnumsOnASingleLine: true, BreakBeforeBraces: Custom, BraceWrapping: {AfterFunction: true}, ColumnLimit: 999 }",
+          -- "-style={BasedOnStyle: llvm, IndentWidth: 4, AllowShortEnumsOnASingleLine: true, AllowShortBlocksOnASingleLine: false, BinPackArguments: false,  BreakBeforeBraces: Custom, BraceWrapping: {AfterFunction: true}, ColumnLimit: 999 }",
         },
       },
       shfmt = {
