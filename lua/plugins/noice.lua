@@ -11,6 +11,8 @@ return {
       { filter = { find = "num of fields" }, skip = true },
       { filter = { find = "Col " }, view = "mini" },
       { filter = { find = "Compiling:" }, view = "mini" },
+      { filter = { find = "<ed:" }, skip = true },
+      { filter = { find = ">ed:" }, skip = true },
       -- { filter = { find = "E162" }, view = "mini" },
       -- { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
       -- { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },

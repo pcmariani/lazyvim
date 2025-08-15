@@ -2,7 +2,7 @@ return {
   "catppuccin/nvim",
   -- disabled = true,
   opts = {
-    transparent_background = true,
+    -- transparent_background = true,
     -- background = { -- :h background
     --   light = "latte",
     --   dark = "mocha",

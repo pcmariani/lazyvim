@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd("FileType", {
   group = "FileTypes",
   desc = "Don't show linenunmbers",
-  pattern = { "yaml", "yml" },
+  pattern = { "yaml", "yml", "codecompanion" },
   command = "set nonumber | set norelativenumber | set signcolumn=no",
 })
 

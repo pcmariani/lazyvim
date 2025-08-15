@@ -41,11 +41,18 @@ local function terminal_send(text)
   if first_terminal_chan then
     vim.api.nvim_chan_send(first_terminal_chan, text)
   else
-    Snacks.terminal(nil, { win = { position = "right" } })
-    first_terminal_chan = get_first_terminal()
-    if first_terminal_chan then
-      vim.api.nvim_chan_send(first_terminal_chan, text)
+    local cmd = vim.g.termCommand
+    -- if cmd and cmd ~= "" then
+    --   os.execute(cmd)
+    -- end
+    if cmd and cmd ~= "" then
+      vim.cmd("!" .. cmd)
     end
+    -- Snacks.terminal(nil, { win = { position = "right" } })
+    -- first_terminal_chan = get_first_terminal()
+    -- if first_terminal_chan then
+    --   vim.api.nvim_chan_send(first_terminal_chan, text)
+    -- end
   end
 end
 

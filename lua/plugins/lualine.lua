@@ -9,7 +9,7 @@ local colors = {
   color7 = "#3EFFDC",
   color8 = "#ae81ff",
   color9 = "#111111",
-  color10 = "#aaff66",
+  color10 = "#a6d189",
 }
 
 local my_theme = {
@@ -72,9 +72,11 @@ return {
     },
     sections = {
       lualine_a = { "%{toupper(mode())} " },
-      lualine_b = {},
+      lualine_b = {
+        { "branch", color = { fg = "#707070" }, padding = { left = 2, right = 2 } },
+      },
       lualine_c = {
-        LazyVim.lualine.root_dir({ icon = "", color = { fg = "#80a0ff" } }),
+        LazyVim.lualine.root_dir({ icon = "", color = { fg = "#77aa88" } }),
         -- {
         --   "filetype",
         --   icon_only = true,
@@ -120,7 +122,6 @@ return {
           cond = require("lazy.status").has_updates,
           color = function() return { fg = Snacks.util.color("Special") } end,
         },
-        { "filetype", color = { gui = "italic", fg = "#707070" } },
         {
 
           "diff",
@@ -139,9 +140,9 @@ return {
               }
             end
           end,
-          padding = { left = 2, right = 0 },
+          padding = { left = 2, right = 2 },
         },
-        { "branch", color = { fg = "#707070" }, padding = { left = 0, right = 2 } },
+        { "filetype", icons_enabled = false, color = { gui = "italic", fg = "#707070" }, padding = { right = 2 } },
       },
 
       lualine_y = {
