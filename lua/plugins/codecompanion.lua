@@ -1,3 +1,5 @@
+-- https://codecompanion.olimorris.dev/usage/events.html
+-- https://github.com/olimorris/dotfiles/blob/main/.config/nvim/lua/plugins/coding.lua
 return {
   "olimorris/codecompanion.nvim",
   cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },

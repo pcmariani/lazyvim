@@ -5,22 +5,18 @@ return {
     -- ... Other dependencies
   },
   opts = {
-    -- completion = {
-    --   trigger = {
-    --     show_in_snippet = false,
-    --   },
-    -- },
+    completion = {
+      --   trigger = {
+      --     show_in_snippet = false,
+      --   },
+      ghost_text = {
+        show_with_menu = false,
+      },
+    },
     sources = {
       -- Add 'avante' to the list
-      default = { "avante", "lsp", "path", "buffer" },
+      default = { "lsp", "path", "buffer" },
       providers = {
-        avante = {
-          module = "blink-cmp-avante",
-          name = "Avante",
-          opts = {
-            -- options for blink-cmp-avante
-          },
-        },
         cmdline = {
           min_keyword_length = function(ctx)
             -- when typing a command, only show when the keyword is 3 characters or longer

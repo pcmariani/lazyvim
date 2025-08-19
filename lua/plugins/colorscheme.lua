@@ -1,13 +1,20 @@
 vim.api.nvim_create_augroup("CustomHighlight", { clear = true })
 
+local light_themes = {
+  "github_light",
+  "github_light_colorblind",
+  "github_light_default",
+  "github_light_high_contrast",
+  "github_light_tritanopia",
+  "tokyonight-day",
+  "catppuccin-latte",
+}
+
 vim.api.nvim_create_autocmd("ColorScheme", {
   group = "CustomHighlight",
-  pattern = {
-    "github_light*",
-    "tokyonight-day",
-    "catppuccin-latte",
-  },
+  pattern = light_themes,
   callback = function()
+    vim.g.theme_type = "light"
     vim.api.nvim_set_hl(0, "Normal", { bg = "#f7f9fa" })
     vim.api.nvim_set_hl(0, "NormalNC", { bg = "#f7f9fa" })
     vim.api.nvim_set_hl(0, "NormalSB", { bg = "#f7f9fa" })
@@ -30,6 +37,44 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 vim.api.nvim_create_autocmd("ColorScheme", {
   group = "CustomHighlight",
+  callback = function(args)
+    local name = args.match
+    if not vim.tbl_contains(light_themes, name) then
+      vim.g.theme_type = "dark"
+      vim.api.nvim_set_hl(0, "Normal", { bg = "none", fg = "#c0c0c0" })
+      vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NormalSB", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+      vim.api.nvim_set_hl(0, "TroubleNormal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "none" })
+      vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+      vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
+      vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = "none" })
+      vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
+      vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", fg = "#2c2c2c" })
+      vim.api.nvim_set_hl(0, "TabLineSel", { fg = "#74b2ff", bg = "#1a1a1a", italic = true })
+      vim.api.nvim_set_hl(0, "TabLine", { fg = "#606060", bg = "none" })
+      vim.api.nvim_set_hl(0, "LineNr", { fg = "#404040" })
+      vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#505060" })
+      vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "none", fg = "#505a60" })
+      vim.api.nvim_set_hl(0, "Comment", { fg = "#505050" })
+      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#8cc85f", bg = "#10130f" })
+      vim.api.nvim_set_hl(0, "CursorLine", { bg = "#000910" })
+      vim.api.nvim_set_hl(0, "QuickFixLine", { bg = "#202020" })
+      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#555540" })
+      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#664444" })
+      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#51807e" })
+      vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#2b2b2b" })
+      vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#2b2b2b" })
+      vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#2b2b2b" })
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = "CustomHighlight",
   pattern = {
     "github_dark*",
   },
@@ -38,74 +83,47 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-  group = "CustomHighlight",
-  pattern = {
-    "moonfly",
-    "tokyonight",
-    "tokyonight-moon",
-    "tokyonight-night",
-    "tokyonight-storm",
-    "catppuccin",
-    "catppuccin-mocha",
-    "catppuccin-frappe",
-    "catppuccin-macchiato",
-    "github_dark*",
-    "default",
-    "habamax",
-    "lunaperche",
-    "slate",
-    "sorbet",
-    "vague",
-  },
-  callback = function()
-    vim.api.nvim_set_hl(0, "Normal", { bg = "none", fg = "#c0c0c0" })
-    vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalSB", { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
-    vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "none" })
-    vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
-    vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
-    vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
-    vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = "none" })
-    vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
-    vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", fg = "#2c2c2c" })
-    vim.api.nvim_set_hl(0, "TabLineSel", { fg = "#74b2ff", bg = "#1a1a1a", italic = true })
-    vim.api.nvim_set_hl(0, "TabLine", { fg = "#606060", bg = "none" })
-    vim.api.nvim_set_hl(0, "LineNr", { fg = "#404040" })
-    vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#505a60" })
-    vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "none", fg = "#505a60" })
-    vim.api.nvim_set_hl(0, "Comment", { fg = "#505050" })
-    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#8cc85f", bg = "#10130f" })
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#000910" })
-    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#555540" })
-    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#664444" })
-    vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#2b2b2b" })
-    vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#2b2b2b" })
-    vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#2b2b2b" })
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "snacks_terminal",
-  callback = function()
-    vim.cmd("setlocal winhighlight=Normal:NormalFloat")
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    -- vim.cmd("hi NormalFloat guibg=#0f0f0f")
-  end,
-})
-
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "snacks_terminal",
+--   callback = function()
+--     vim.cmd("setlocal winhighlight=Normal:NormalFloat")
+--     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+--     -- vim.cmd("hi NormalFloat guibg=#0f0f0f")
+--   end,
+-- })
+--
 return {
   { "bluz71/vim-moonfly-colors" },
   {
     "LazyVim/LazyVim",
     opts = {
       -- colorscheme = "moonfly",
-      -- colorscheme = "catppuccin-frappe",
+      colorscheme = "catppuccin-mocha",
       -- colorscheme = "tokyonight",
       -- colorscheme = "github_dark_default",
-      colorscheme = "vague",
+      -- colorscheme = "vague",
     },
   },
 }
+
+-- local dark_themes = {
+--   "moonfly",
+--   "tokyonight",
+--   "tokyonight-moon",
+--   "tokyonight-night",
+--   "tokyonight-storm",
+--   "catppuccin",
+--   "catppuccin-mocha",
+--   "catppuccin-frappe",
+--   "catppuccin-macchiato",
+--   "github_dark*",
+--   "default",
+--   "habamax",
+--   "lunaperche",
+--   "slate",
+--   "sorbet",
+--   "vague",
+--   "elflord",
+--   "minicyan",
+--   "minischeme",
+-- }

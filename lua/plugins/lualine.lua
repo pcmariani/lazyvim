@@ -1,36 +1,46 @@
 local icons = LazyVim.config.icons
 
 local colors = {
-  color0 = "#0f0f0f",
-  color1 = "#ff5189",
-  color2 = "#c6c6c6",
-  color3 = "#303030",
-  color6 = "#9e9e9e",
-  color7 = "#3EFFDC",
-  color8 = "#ae81ff",
-  color9 = "#111111",
-  color10 = "#a6d189",
+  tackyPink = "#ff00ff",
+  tackyYellow = "#ffff00",
+  tackyCyan = "#3EFFDC",
+  grey = "#707070",
+  scarlet = "#ff5189",
+  blue = "#74c7ec",
+  green = "#a6e3a1",
+}
+
+local styles = {
+  fg = {
+    root_dir = colors.blue,
+    z = colors.green,
+  },
+  gui = {
+    root_dir = "italic",
+    a = "bold",
+    b = "italic",
+    c = "italic",
+    x = "italic",
+    z = "italic",
+  },
 }
 
 local my_theme = {
   normal = {
-    a = { fg = colors.color7, gui = "bold" },
-    b = { fg = colors.color10, gui = "italic" },
-    c = { fg = colors.color2 },
-    y = { fg = colors.color2 },
-    z = { fg = colors.color10, gui = "italic" },
+    a = { fg = colors.tackyCyan, gui = styles.gui.a },
+    b = { fg = colors.grey, gui = styles.gui.b },
+    c = { fg = colors.scarlet, gui = styles.gui.c },
+    x = { fg = colors.grey, gui = styles.gui.x },
+    y = { fg = colors.scarlet },
+    z = { fg = styles.fg.z, gui = styles.gui.z },
   },
   visual = {
-    a = { fg = colors.color8, gui = "bold" },
-    b = { fg = colors.color10, gui = "italic" },
-    y = { fg = colors.color2 },
-    z = { fg = colors.color10, gui = "italic" },
+    a = { fg = colors.tackyPink, gui = styles.gui.a },
+    z = { fg = styles.fg.z, gui = styles.gui.z },
   },
   insert = {
-    a = { fg = colors.color2, gui = "bold" },
-    b = { fg = colors.color10, gui = "italic" },
-    y = { fg = colors.color2 },
-    z = { fg = colors.color10, gui = "italic" },
+    a = { fg = colors.tackyYellow, gui = styles.gui.a },
+    z = { fg = styles.fg.z, gui = styles.gui.z },
   },
 }
 
@@ -71,19 +81,21 @@ return {
       section_separators = { left = " ", right = " " },
     },
     sections = {
-      lualine_a = { "%{toupper(mode())} " },
+      lualine_a = {
+        { "%{toupper(mode())} ", padding = { left = 2 } },
+      },
       lualine_b = {
-        { "branch", color = { fg = "#707070" }, padding = { left = 2, right = 2 } },
+        { "branch", padding = { left = 2, right = 2 } },
       },
       lualine_c = {
-        LazyVim.lualine.root_dir({ icon = "", color = { fg = "#77aa88" } }),
+        LazyVim.lualine.root_dir({ icon = "", color = { fg = styles.fg.root_dir, gui = styles.gui.root_dir } }),
         -- {
         --   "filetype",
         --   icon_only = true,
         --   separator = "",
         --   padding = { left = 1, right = 0 },
         -- },
-        { buffer_name, color = { gui = "bold" }, padding = { left = 1, right = 1 } },
+        { buffer_name, padding = { left = 1, right = 1 } },
 
         {
           "diagnostics",
@@ -142,7 +154,7 @@ return {
           end,
           padding = { left = 2, right = 2 },
         },
-        { "filetype", icons_enabled = false, color = { gui = "italic", fg = "#707070" }, padding = { right = 2 } },
+        { "filetype", icons_enabled = false, padding = { right = 2 } },
       },
 
       lualine_y = {
@@ -162,3 +174,13 @@ return {
     },
   },
 }
+
+-- almostBlack = "#0f0f0f",
+-- paleGreen = "#a6d189",
+-- dimGreen = "#77aa88",
+-- _blue = "#89b4fa",
+-- _dimPaleGreen = "#94d2e5",
+-- _palerGreen = "#b7efb2",
+-- _orange = "#fab387",
+-- _paleYellow = "#f9e2af",
+-- cyan = "#40FFFF",

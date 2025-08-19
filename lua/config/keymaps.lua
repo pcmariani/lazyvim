@@ -11,6 +11,7 @@ vim.keymap.set({ "n", "i", "t" }, "<c-cr>", function()
 end, { desc = "Send Terminal Command" })
 
 -- misc
+vim.keymap.set({ "n" }, "<leader><cr>", ":!", { desc = "Execute Shell Command" })
 vim.keymap.set("n", "<leader>ts", function()
   require("myStuff.myFuncs").toggle_status_bars()
 end, { silent = true, desc = "Toggle Statuslines" })

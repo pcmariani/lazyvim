@@ -8,8 +8,14 @@ return {
     formatters = {
       clang_format = {
         prepend_args = {
-          "-style={BasedOnStyle: llvm, IndentWidth: 4, AllowShortEnumsOnASingleLine: true, BreakBeforeBraces: Custom, BraceWrapping: {AfterFunction: true}, ColumnLimit: 999 }",
-          -- "-style={BasedOnStyle: llvm, IndentWidth: 4, AllowShortEnumsOnASingleLine: true, AllowShortBlocksOnASingleLine: false, BinPackArguments: false,  BreakBeforeBraces: Custom, BraceWrapping: {AfterFunction: true}, ColumnLimit: 999 }",
+          "-style=" .. [[{
+              BasedOnStyle: llvm,
+              IndentWidth: 4,
+              ColumnLimit: 0,
+              AllowShortEnumsOnASingleLine: true,
+              BreakBeforeBraces: Custom,
+              BraceWrapping: { AfterFunction: true },
+            }]],
         },
       },
       shfmt = {
@@ -18,3 +24,15 @@ return {
     },
   },
 }
+
+--
+-- # Function call arguments
+-- BinPackArguments: false,
+-- AllowAllArgumentsOnNextLine: false,
+-- AlignAfterOpenBracket: AlwaysBreak,
+-- PenaltyBreakArgument: 1,
+--
+-- # Function parameters (optional, remove if you don’t want this)
+-- BinPackParameters: false,
+-- AllowAllParametersOfDeclarationOnNextLine: false,
+-- PenaltyBreakParameter: 1
