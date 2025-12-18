@@ -11,8 +11,8 @@ return {
       { filter = { find = "num of fields" }, skip = true },
       { filter = { find = "Col " }, view = "mini" },
       { filter = { find = "Compiling:" }, view = "mini" },
-      { filter = { find = "<ed:" }, skip = true },
-      { filter = { find = ">ed:" }, skip = true },
+      { filter = { find = "<ed" }, skip = true },
+      { filter = { find = ">ed" }, skip = true },
       { filter = { find = "Config Change Detected" }, view = "mini" },
       -- { filter = { find = "E162" }, view = "mini" },
       -- { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
@@ -26,6 +26,7 @@ return {
     presets = {
       bottom_search = false,
       command_palette = false, -- position the cmdline and popupmenu together
+      lsp_doc_border = true,
     },
     views = {
       cmdline_popup = {

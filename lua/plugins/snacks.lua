@@ -30,6 +30,11 @@ return {
         },
       },
     },
+    -- styles = {
+    --   float = {
+    --     border = "rounded",
+    --   },
+    -- },
   },
   keys = {
     {

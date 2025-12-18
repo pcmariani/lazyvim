@@ -1,6 +1,7 @@
 local icons = LazyVim.config.icons
 
 local colors = {
+  almostBlack = "#0f0f0f",
   tackyPink = "#ff00ff",
   tackyYellow = "#ffff00",
   tackyCyan = "#3EFFDC",
@@ -13,7 +14,8 @@ local colors = {
 local styles = {
   fg = {
     root_dir = colors.blue,
-    z = colors.green,
+    -- z = colors.green,
+    z = colors.blue,
   },
   gui = {
     root_dir = "italic",
@@ -28,6 +30,25 @@ local styles = {
 local my_theme = {
   normal = {
     a = { fg = colors.tackyCyan, gui = styles.gui.a },
+    b = { fg = colors.grey, gui = styles.gui.b },
+    c = { fg = colors.scarlet, gui = styles.gui.c },
+    x = { fg = colors.grey, gui = styles.gui.x },
+    y = { fg = colors.scarlet },
+    z = { fg = styles.fg.z, gui = styles.gui.z },
+  },
+  visual = {
+    a = { fg = colors.tackyPink, gui = styles.gui.a },
+    z = { fg = styles.fg.z, gui = styles.gui.z },
+  },
+  insert = {
+    a = { fg = colors.tackyYellow, gui = styles.gui.a },
+    z = { fg = styles.fg.z, gui = styles.gui.z },
+  },
+}
+
+local my_light_theme = {
+  normal = {
+    a = { fg = colors.almostBlack, gui = styles.gui.a },
     b = { fg = colors.grey, gui = styles.gui.b },
     c = { fg = colors.scarlet, gui = styles.gui.c },
     x = { fg = colors.grey, gui = styles.gui.x },
@@ -175,7 +196,6 @@ return {
   },
 }
 
--- almostBlack = "#0f0f0f",
 -- paleGreen = "#a6d189",
 -- dimGreen = "#77aa88",
 -- _blue = "#89b4fa",

@@ -1,7 +1,7 @@
 return {
   "yorickpeterse/nvim-pqf",
   name = "pqf",
-  -- event = "BufEnter qf",
+  event = "VeryLazy",
   config = function()
     require("pqf").setup({
       signs = {

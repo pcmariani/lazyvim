@@ -30,3 +30,5 @@
 --     print("No command found")
 --   end
 -- end, {})
+
+vim.api.nvim_create_user_command("SearchVisibleQF", require("myStuff.myFuncs").SearchVisibleWindowsToQuickFix, {})

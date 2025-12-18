@@ -1,18 +1,17 @@
 return {
   "saghen/blink.cmp",
-  dependencies = {
-    "Kaiser-Yang/blink-cmp-avante",
-    -- ... Other dependencies
-  },
   opts = {
     completion = {
       --   trigger = {
       --     show_in_snippet = false,
       --   },
+      menu = { border = "rounded" },
+      documentation = { window = { border = "rounded" } },
       ghost_text = {
         show_with_menu = false,
       },
     },
+
     sources = {
       -- Add 'avante' to the list
       default = { "lsp", "path", "buffer" },
@@ -28,16 +27,16 @@ return {
         },
       },
     },
-    cmdline = {
-      keymap = {
-        -- recommended, as the default keymap will only show and select the next item
-        ["<Tab>"] = { "show", "accept" },
-        -- ["<CR>"] = { "accept", "fallback" },
-        -- ["<CR>"] = { "accept_and_enter", "fallback" },
-      },
-      completion = { menu = { auto_show = true } },
-      enabled = true,
-    },
+    -- cmdline = {
+    --   keymap = {
+    --     -- recommended, as the default keymap will only show and select the next item
+    --     ["<Tab>"] = { "show", "accept" },
+    --     -- ["<CR>"] = { "accept", "fallback" },
+    --     -- ["<CR>"] = { "accept_and_enter", "fallback" },
+    --   },
+    --   completion = { menu = { auto_show = true } },
+    --   enabled = true,
+    -- },
     keymap = {
       ["<Tab>"] = {
         function(cmp)

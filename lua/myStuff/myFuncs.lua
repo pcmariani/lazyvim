@@ -75,4 +75,44 @@ function M.toggle_status_bars()
   end
 end
 
+function M.SearchVisibleWindowsToQuickFix()
+  local search_term = vim.fn.input("Search all windows for: ")
+  if search_term == "" then
+    return
+  end
+
+  local qf_items = {}
+  local wins = vim.api.nvim_tabpage_list_wins(0)
+
+  for _, win in ipairs(wins) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local bufname = vim.api.nvim_buf_get_name(buf)
+
+    -- Skip unlisted or special buffers
+    if vim.api.nvim_get_option_value("buftype", { buf = buf }) == "" then
+      local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+      for lnum, line in ipairs(lines) do
+        local col = string.find(line, search_term)
+        if col then
+          table.insert(qf_items, {
+            filename = bufname ~= "" and bufname or "[No Name]",
+            lnum = lnum,
+            col = col,
+            text = line,
+          })
+        end
+      end
+    end
+
+    if #qf_items == 0 then
+      print("No matches found for: " .. search_term)
+    else
+      vim.fn.setqflist(qf_items, "r")
+      vim.cmd("copen")
+      print("Found " .. #qf_items .. " matches for: " .. search_term)
+    end
+  end
+end
+
 return M
