@@ -3,6 +3,16 @@ vim.api.nvim_create_augroup("Makeprgs", { clear = true })
 vim.api.nvim_create_augroup("FileTypes", { clear = true })
 vim.api.nvim_create_augroup("StartUp", { clear = true })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = "FileTypes",
+  pattern = "qf",
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = "no"
+  end,
+})
+
 vim.api.nvim_create_autocmd("VimEnter", {
   group = "StartUp",
   callback = function()
@@ -13,7 +23,17 @@ vim.api.nvim_create_autocmd("VimEnter", {
   nested = true,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = "StartUp",
+  callback = function()
+    -- Keep comment continuation on <Enter> (r)
+    -- Disable continuation for o/O
+    vim.opt_local.formatoptions:remove("o")
+  end,
+})
+
 vim.api.nvim_create_autocmd("VimEnter", {
+  group = "StartUp",
   callback = function()
     local function popen(cmd)
       local handle = io.popen(cmd)
