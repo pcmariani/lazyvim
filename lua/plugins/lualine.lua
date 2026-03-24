@@ -4,7 +4,7 @@ local colors = {
   almostBlack = "#0f0f0f",
   tackyPink = "#ff00ff",
   tackyYellow = "#ffff00",
-  tackyCyan = "#3EFFDC",
+  tackyBlue = "#44adfc",
   grey = "#707070",
   scarlet = "#ff5189",
   blue = "#74c7ec",
@@ -29,7 +29,7 @@ local styles = {
 
 local my_theme = {
   normal = {
-    a = { fg = colors.tackyCyan, gui = styles.gui.a },
+    a = { fg = colors.tackyBlue, gui = styles.gui.a },
     b = { fg = colors.grey, gui = styles.gui.b },
     c = { fg = colors.scarlet, gui = styles.gui.c },
     x = { fg = colors.grey, gui = styles.gui.x },
@@ -65,6 +65,27 @@ local my_light_theme = {
   },
 }
 
+local my_neovide_theme = {
+  normal = {
+    a = { fg = colors.tackyBlue, gui = styles.gui.a },
+    -- dimmer branch
+    b = { fg = "#7a7a7a", gui = styles.gui.b },
+    -- brighter filename section
+    c = { fg = "#a0a0a0", gui = styles.gui.c },
+    x = { fg = "#7a7a7a", gui = styles.gui.x },
+    y = { fg = "#a0a0a0" },
+    z = { fg = "#a0a0a0", gui = styles.gui.z },
+  },
+  insert = {
+    a = { fg = colors.tackyYellow, gui = styles.gui.a },
+  },
+  visual = {
+    a = { fg = colors.tackyPink, gui = styles.gui.a },
+  },
+}
+
+local is_neovide = vim.g.neovide
+
 local function buffer_name()
   local buftype = vim.bo.buftype
   if buftype == "terminal" then
@@ -97,7 +118,7 @@ return {
   opts = {
     options = {
       -- theme = custom_moonfly,
-      theme = my_theme,
+      theme = is_neovide and my_neovide_theme or my_theme,
       component_separators = { left = " ", right = " " },
       section_separators = { left = " ", right = " " },
     },
@@ -152,7 +173,9 @@ return {
         -- stylua: ignore
         {
           require("lazy.status").updates,
-          cond = require("lazy.status").has_updates,
+          cond = function()
+            return (not is_neovide) and require("lazy.status").has_updates()
+          end,
           color = function() return { fg = Snacks.util.color("Special") } end,
         },
         {
@@ -183,10 +206,9 @@ return {
         { "location", padding = { left = 1, right = 1 } },
       },
 
-      lualine_z = {
+      lualine_z = is_neovide and {} or {
         {
           function()
-            --   return " " .. os.date("%R")
             return vim.g.tmux_info or ""
           end,
           padding = { left = 2, right = 1 },

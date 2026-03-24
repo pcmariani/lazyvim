@@ -16,10 +16,8 @@ return {
       -- a space
       show_multiple_lines = false,
 
-      -- How long filenames in the quickfix are allowed to be. 0 means no limit.
-      -- Filenames above this limit will be truncated from the beginning with
-      -- `filename_truncate_prefix`.
-      max_filename_length = 0,
+      -- Limit filename length so location column stays aligned
+      max_filename_length = 40,
 
       -- Prefix to use for truncated filenames.
       filename_truncate_prefix = "[...]",

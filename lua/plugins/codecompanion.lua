@@ -2,6 +2,7 @@
 -- https://github.com/olimorris/dotfiles/blob/main/.config/nvim/lua/plugins/coding.lua
 return {
   "olimorris/codecompanion.nvim",
+  enabled = false,
   cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
   opts = {
 
@@ -239,6 +240,7 @@ return {
     },
     {
       "MeanderingProgrammer/render-markdown.nvim",
+      enabled = false,
       opts = {
         file_types = { "markdown", "codecompanion" },
       },

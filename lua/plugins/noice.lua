@@ -40,10 +40,25 @@ return {
         position = {
           row = "80%",
         },
-        size = {
-          width = 80,
-          height = "auto",
-        },
+        size = (function()
+          local cols = vim.o.columns
+          local width
+          if cols < 80 then
+            width = 60
+          elseif cols < 100 then
+            width = 70
+          elseif cols < 120 then
+            width = 90
+          elseif cols < 180 then
+            width = 110
+          else
+            width = 130
+          end
+          return {
+            width = width,
+            height = "auto",
+          }
+        end)(),
         -- win_options = {
         --   winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
         -- },
@@ -82,6 +97,8 @@ return {
         },
         input = {}, -- Used by input()
       },
+      -- cmdline keymaps handled globally via command-line mode mapping
     },
   },
+  -- no custom config here; cmdline mappings handled in config/keymaps.lua
 }
