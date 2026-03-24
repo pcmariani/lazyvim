@@ -69,30 +69,27 @@ vim.keymap.set("n", "<leader>c2", ":set tabstop=2 shiftwidth=2<CR>", { silent = 
 vim.keymap.set("n", "<leader>c4", ":set tabstop=4 shiftwidth=4<CR>", { silent = true, desc = "Tabs: 4 spaces" })
 
 -- Copy/paste
-vim.keymap.set("x", "p", "P", { desc = "Paste without yanking" })
+-- (Cmd-C / Cmd-V handled in config/neovide.lua)
+vim.keymap.set("v", "p", '"_dP', { desc = "Paste without yanking" })
+-- vim.keymap.set("x", "p", "P", { desc = "Paste without yanking" })
 
 -- Cycle visual > visual block mode
 vim.keymap.set("x", "v", [[mode() ==# 'v' ? 'V' : mode() ==# '<C-v>' ? 'v' : '<C-q>']], { silent = true, expr = true })
 
 -- quickfix
-vim.keymap.set(
-  "n",
-  "<C-q>",
-  ':lua require("myStuff/myFuncs").search_to_qf()<CR>',
-  { silent = true, desc = "Send current search to qf" }
-)
-vim.keymap.set(
-  "n",
-  "<C-p>",
-  [[empty(filter(getwininfo(), 'v:val.quickfix')) ? "<C-p>" : ":cprevious<CR>"]],
-  { silent = true, expr = true, desc = "cprevious" }
-)
-vim.keymap.set(
-  "n",
-  "<C-n>",
-  [[empty(filter(getwininfo(), 'v:val.quickfix')) ? "<C-n>" : ":cnext<CR>"]],
-  { silent = true, expr = true, desc = "cnext" }
-)
+vim.keymap.set("n", "<C-q>", function()
+  require("myStuff.myFuncs").search_to_qf(false)
+end, { silent = true, desc = "Quickfix (buffer)" })
+vim.keymap.set("n", "<leader><C-q>", function()
+  require("myStuff.myFuncs").search_to_qf(true)
+end, { silent = true, desc = "Quickfix (project)" })
+vim.keymap.set("n", "<C-p>", function()
+  require("myStuff.myFuncs").smart_qf_nav("prev")
+end, { silent = true, desc = "Quickfix previous (smart)" })
+
+vim.keymap.set("n", "<C-n>", function()
+  require("myStuff.myFuncs").smart_qf_nav("next")
+end, { silent = true, desc = "Quickfix next (smart)" })
 
 -- enter key
 vim.keymap.set(
@@ -106,17 +103,30 @@ vim.keymap.set(
 -- global search for word under cursor and send to quickfix
 vim.keymap.set(
   "n",
-  "<leader>s/",
+  "<leader>f/",
   '/\\V<C-r>=expand("<cword>")<CR><CR>:lua require("myStuff/myFuncs").search_to_qf()<CR>',
   { silent = true, desc = "Search Word Under Cursor" }
 )
 -- local search for visual selection and send to quickfix
 vim.keymap.set(
   "v",
-  "<leader>s/",
+  "<leader>f/",
   [["hy/<C-r>h<CR><S-n>:lua require("myStuff/myFuncs").search_to_qf()<CR>]],
   { silent = true, desc = "Search Visual Selection" }
 )
+
+-- Sync quickfix with n/N search navigation
+vim.keymap.set("n", "n", function()
+  vim.cmd("normal! n")
+  require("myStuff.myFuncs").sync_qf_with_cursor()
+end, { silent = true, desc = "Next search (sync qf)" })
+
+vim.keymap.set("n", "N", function()
+  vim.cmd("normal! N")
+  require("myStuff.myFuncs").sync_qf_with_cursor()
+end, { silent = true, desc = "Prev search (sync qf)" })
+
+-- (Neovide-specific cmdline paste mapping moved to config/neovide.lua)
 
 -- Search/Replace ---
 -- start local whole file substitution
