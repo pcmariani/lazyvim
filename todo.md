@@ -2,36 +2,37 @@
 
 ## completion
 
-- accept
-- cancel
-- auto-select first?
-- preview?
+- [ ] accept
+- [ ] cancel
+- [ ] auto-select first?
+- [ ] preview?
 
 ## ColorScheme
 
-- Lualine
-  - light, dark
-  - more subtle colors?
+- [ ] Lualine
+  - [ ] light, dark
+  - [x] more subtle colors?
 
 ## NeoVide
 
-- double click opens up NeoVide
-- no transparency
-
-## CodeCompanion
-
-- keymaps: Enter chats?
+- [ ] double click opens up NeoVide
+- [ ] no transparency
 
 ## Debugger
 
-- keymaps
+- [ ] keymaps
 
 ## Copy/Paste
 
-- Don't yank when pasting
+- [ ] Ctrl-C/Ctrl-V
+- [ ] Don't yank when pasting
 
 ## simple-term-exec
 
-- set build command
-- see result in popup or messages
-- OR open quickfix automatically
+- [ ] set build command
+- [ ] see result in popup or messages
+- [ ] OR open quickfix automatically
+
+## UI
+
+- [x] border around pop-up menus

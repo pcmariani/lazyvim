@@ -45,9 +45,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
       return nil
     end
 
-    local session = popen("tmux display-message -p '#S:#I' 2>/dev/null")
+    local session = popen("tmux display-message -p '#S' 2>/dev/null")
     if session and session ~= "" then
-      vim.g.tmux_info = " " .. session
+      -- vim.g.tmux_info = " " .. session
+      vim.g.tmux_info = session
     else
       vim.g.tmux_info = ""
     end

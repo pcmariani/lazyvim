@@ -9,11 +9,14 @@ local colors = {
   scarlet = "#ff5189",
   blue = "#74c7ec",
   green = "#a6e3a1",
+  -- grey2 = "#a09090",
+  grey2 = "#767680",
 }
 
 local styles = {
   fg = {
-    root_dir = colors.blue,
+    -- root_dir = colors.blue,
+    root_dir = "a0a0a0",
     -- z = colors.green,
     z = colors.blue,
   },
@@ -21,8 +24,8 @@ local styles = {
     root_dir = "italic",
     a = "bold",
     b = "italic",
-    c = "italic",
-    x = "italic",
+    c = "none",
+    x = "none",
     z = "italic",
   },
 }
@@ -84,6 +87,25 @@ local my_neovide_theme = {
   },
 }
 
+local simple_theme = {
+  normal = {
+    a = { fg = colors.grey2, gui = styles.gui.a },
+    -- dimmer branch
+    b = { fg = colors.grey2, gui = styles.gui.b },
+    -- brighter filename section
+    c = { fg = colors.grey2, gui = styles.gui.c },
+    x = { fg = colors.grey2, gui = styles.gui.x },
+    y = { fg = colors.grey2 },
+    z = { fg = colors.grey2, gui = styles.gui.z },
+  },
+  -- insert = {
+  --   a = { fg = colors.tackyYellow, gui = styles.gui.a },
+  -- },
+  -- visual = {
+  --   a = { fg = colors.tackyPink, gui = styles.gui.a },
+  -- },
+}
+
 local is_neovide = vim.g.neovide
 
 local function buffer_name()
@@ -113,41 +135,48 @@ local function buffer_name()
   return filename .. symbol
 end
 
+-- stylua: ignore
 return {
   "nvim-lualine/lualine.nvim",
   opts = {
     options = {
-      -- theme = custom_moonfly,
-      theme = is_neovide and my_neovide_theme or my_theme,
+      theme = simple_theme,
+      -- theme = is_neovide and my_neovide_theme or my_theme,
       component_separators = { left = " ", right = " " },
       section_separators = { left = " ", right = " " },
     },
     sections = {
       lualine_a = {
-        { "%{toupper(mode())} ", padding = { left = 2 } },
+        -- { "mode" },
+        -- { function() return "---" end, padding = { left = 2 } },
+        { "%{toupper(mode())} ", padding = { left = 3, right = 1 } },
+        -- { "%{mode()} ", padding = { left = 2 } },
       },
       lualine_b = {
-        { "branch", padding = { left = 2, right = 2 } },
+        -- { "branch", padding = { left = 2, right = 0 }, icons_enabled = false },
+        { "branch", padding = { left = 2, right = 0 } },
+        LazyVim.lualine.root_dir({ icon = "> ", color = { fg = colors.grey2, gui = styles.gui.root_dir } }),
       },
       lualine_c = {
-        LazyVim.lualine.root_dir({ icon = "", color = { fg = styles.fg.root_dir, gui = styles.gui.root_dir } }),
+        -- LazyVim.lualine.root_dir({ icon = "", color = { fg = colors.grey2, gui = styles.gui.root_dir } }),
+        -- LazyVim.lualine.root_dir({ icon = "", color = { fg = colors.grey2, gui = styles.gui.root_dir } }),
         -- {
         --   "filetype",
         --   icon_only = true,
         --   separator = "",
         --   padding = { left = 1, right = 0 },
         -- },
-        { buffer_name, padding = { left = 1, right = 1 } },
+        { buffer_name, padding = { left = 3, right = 1 } },
 
-        {
-          "diagnostics",
-          symbols = {
-            error = icons.diagnostics.Error,
-            warn = icons.diagnostics.Warn,
-            info = icons.diagnostics.Info,
-            hint = icons.diagnostics.Hint,
-          },
-        },
+        -- {
+        --   "diagnostics",
+        --   symbols = {
+        --     error = icons.diagnostics.Error,
+        --     warn = icons.diagnostics.Warn,
+        --     info = icons.diagnostics.Info,
+        --     hint = icons.diagnostics.Hint,
+        --   },
+        -- },
       },
 
       lualine_x = {
@@ -171,33 +200,33 @@ return {
           color = function() return { fg = Snacks.util.color("Debug") } end,
         },
         -- stylua: ignore
-        {
-          require("lazy.status").updates,
-          cond = function()
-            return (not is_neovide) and require("lazy.status").has_updates()
-          end,
-          color = function() return { fg = Snacks.util.color("Special") } end,
-        },
-        {
-
-          "diff",
-          symbols = {
-            added = icons.git.added,
-            modified = icons.git.modified,
-            removed = icons.git.removed,
-          },
-          source = function()
-            local gitsigns = vim.b.gitsigns_status_dict
-            if gitsigns then
-              return {
-                added = gitsigns.added,
-                modified = gitsigns.changed,
-                removed = gitsigns.removed,
-              }
-            end
-          end,
-          padding = { left = 2, right = 2 },
-        },
+        -- {
+        --   require("lazy.status").updates,
+        --   cond = function()
+        --     return (not is_neovide) and require("lazy.status").has_updates()
+        --   end,
+        --   color = function() return { fg = Snacks.util.color("Special") } end,
+        -- },
+        -- {
+        --
+        --   "diff",
+        --   symbols = {
+        --     added = icons.git.added,
+        --     modified = icons.git.modified,
+        --     removed = icons.git.removed,
+        --   },
+        --   source = function()
+        --     local gitsigns = vim.b.gitsigns_status_dict
+        --     if gitsigns then
+        --       return {
+        --         added = gitsigns.added,
+        --         modified = gitsigns.changed,
+        --         removed = gitsigns.removed,
+        --       }
+        --     end
+        --   end,
+        --   padding = { left = 2, right = 2 },
+        -- },
         { "filetype", icons_enabled = false, padding = { right = 2 } },
       },
 

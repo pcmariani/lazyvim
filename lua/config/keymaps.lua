@@ -10,6 +10,12 @@ vim.keymap.set({ "n", "i", "t" }, "<c-cr>", function()
   require("myStuff.simple-term-exec").send_command()
 end, { desc = "Send Terminal Command" })
 
+-- nvim-tmux-navigator terminal
+vim.keymap.set("t", "<C-h>", [[<C-\><C-n><Cmd>TmuxNavigateLeft<CR>]], { silent = true, desc = "Tmux Navigate Left" })
+vim.keymap.set("t", "<C-j>", [[<C-\><C-n><Cmd>TmuxNavigateDown<CR>]], { silent = true, desc = "Tmux Navigate Down" })
+vim.keymap.set("t", "<C-k>", [[<C-\><C-n><Cmd>TmuxNavigateUp<CR>]], { silent = true, desc = "Tmux Navigate Up" })
+vim.keymap.set("t", "<C-l>", [[<C-\><C-n><Cmd>TmuxNavigateRight<CR>]], { silent = true, desc = "Tmux Navigate Right" })
+
 -- misc
 vim.keymap.set({ "n" }, "<leader><cr>", ":!", { desc = "Execute Shell Command" })
 vim.keymap.set("n", "<leader>ts", function()
@@ -86,7 +92,6 @@ end, { silent = true, desc = "Quickfix (project)" })
 vim.keymap.set("n", "<C-p>", function()
   require("myStuff.myFuncs").smart_qf_nav("prev")
 end, { silent = true, desc = "Quickfix previous (smart)" })
-
 vim.keymap.set("n", "<C-n>", function()
   require("myStuff.myFuncs").smart_qf_nav("next")
 end, { silent = true, desc = "Quickfix next (smart)" })

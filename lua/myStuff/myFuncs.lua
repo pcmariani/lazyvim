@@ -223,10 +223,10 @@ function M.toggle_status_bars()
 
   if vim.o.laststatus == 0 then
     vim.o.laststatus = 3
-    vim.fn.system("tmux set status on")
+    -- vim.fn.system("tmux set status on")
   else
     vim.o.laststatus = 0
-    vim.fn.system("tmux set status off")
+    -- vim.fn.system("tmux set status off")
   end
 end
 
